@@ -1,0 +1,38 @@
+﻿#ifndef SQLITE_OPERATION_H_
+#define SQLITE_OPERATION_H_
+#include <string>
+#include <vector>
+#include <sqlite3.h>
+using namespace std;
+class SqliteOperation
+{
+  private:
+    sqlite3 *m_db;
+    int m_rc;
+    string m_ConnectString;
+    string m_Passwd;
+    string m_LastErrorMsg;
+    bool m_Busy;
+    int MAX_TIME_SEC = 30;
+    void CreateSqliteDB(string SqliteDbName, string Passwd);
+    void ConnectionInit(string SqliteDbName, string Passwd);
+    bool ConnectToDB();
+    void ShutDown();
+    void SetExclusive();
+    void OutputDebugMsg(string FunctionName);
+
+  public:
+    string LastErrorMsg;
+    SqliteOperation(string SqliteDbName);
+    SqliteOperation(string SqliteDbName, string Passwd);
+    bool ChangePasswd(string Passwd);
+    bool TestDB();
+    DataTable Query(string QueryCmd);
+    bool BatProcess(vector<string> BatCmdList);
+    bool InsertData(string InsertCmd);
+    bool DeleteData(string DeleteCmd);
+    bool UpdateData(string UpdateCmd);
+    bool ExecuteSql(string SqlCmd);
+    void CompressDB();
+};
+#endif
