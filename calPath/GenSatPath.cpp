@@ -80,7 +80,9 @@ void GenSatPath::Do()
 	sat.SetCurTLE(str1, str2, str3);
 	//compute track
 	DateTime StartTime(2018, 2, 2, 3, 14, 10);
-	DateTime StopTime(2018, 2, 12, 3, 24, 10);
+	StartTime.setTimezone(8);
+	DateTime StopTime(2018, 2, 2, 3, 14, 20);
+	StopTime.setTimezone(8);
 	int tsp = 20;
 	cout << "computing track..." << endl;
 
@@ -108,7 +110,7 @@ void GenSatPath::Do()
 			vector<double> senblh = sat.GetSensorPointsBLH(sen, tp.getTime(), tp.getEciPoint().getX(),
 														   tp.getEciPoint().getY(), tp.getEciPoint().getZ(), tp.getVel().getX(), tp.getVel().getY(), tp.getVel().getZ());
 
-			//cout << "left lon: " << senblh[0] << " left lat: " << senblh[1] << " right lon: " << senblh[2] << " right lat: " << senblh[3] << endl;
+			cout << "left lon: " << senblh[0] << " left lat: " << senblh[1] << " right lon: " << senblh[2] << " right lat: " << senblh[3] << endl;
 		}
 	}
 	//save to db

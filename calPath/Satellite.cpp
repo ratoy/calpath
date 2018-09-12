@@ -21,7 +21,7 @@ void Satellite::Init()
 double Satellite::TheltaG(DateTime dt)
 {
     JulianConvert jul;
-    return jul.ToGMST(dt.ToUniversalTime());
+    return jul.ToGMST(dt);
 }
 
 vector<double> Satellite::RotateZ(double x0, double y0, double z0, double AngleRad)
@@ -56,7 +56,7 @@ vector<double> Satellite::MulMatrix3p1(vector<vector<double>> mx, vector<double>
     double m2 = mx[1][0] * my[0] + mx[1][1] * my[1] + mx[1][2] * my[2];
     double m3 = mx[2][0] * my[0] + mx[2][1] * my[1] + mx[2][2] * my[2];
 
-    vector<double> m{m1,m2,m3};
+    vector<double> m{m1, m2, m3};
     return m;
 }
 
@@ -279,11 +279,14 @@ vector<double> Satellite::GetSensorPointsBLH(Sensor sen, DateTime dt, double rx,
     //计算载荷观测范围的ECI坐标
     vector<double> seneci = GetSensorPointsECI(sen, rx, ry, rz, vx, vy, vz);
 
+    cout << "lx: " << seneci[0] << " ly: " << seneci[1] << " lz: " << seneci[2] << " rx: " << seneci[3] << " ry: " << seneci[4] << " rz: " << seneci[5] << endl;
+
     //分离出左右侧点
     vector<double> pleci{seneci[0], seneci[1], seneci[2]};
     vector<double> preci{seneci[3], seneci[4], seneci[5]};
     //根据时间将ECI转换成ECR
     double thetaG = TheltaG(dt);
+    cout<<"thetaG: "<<thetaG<<endl;
     vector<double> plecr = RotateZ(pleci[0], pleci[1], pleci[2], -thetaG);
     vector<double> precr = RotateZ(preci[0], preci[1], preci[2], -thetaG);
 
