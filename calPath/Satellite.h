@@ -38,6 +38,20 @@ private:
 
   double GetSatHeight() { return 600.0; }
   double TheltaG(DateTime dt);
+
+  MulMatrix3p1(double mx[][3],double my[][3], double res[][3]);
+  RotateX(double coord[], double AngleRad, double res[]);
+  RotateY(double coord[], double AngleRad, double res[]);
+  RotateZ(double coord[], double AngleRad, double res[]);
+  ECRtoBL(double ecr[], double res[]);
+  GetSensorPointsECI(Sensor sen, double r[], double v[],double res[]);
+  IntersectSolution(double v[], double r[],double res[]);
+  CrossProduct(double v1[], double v2[],double res[]);
+  Yuzishi(double array[][3],double res[][3]);
+  double MOD3p3(double[][3] m);
+  ComputeReo(double r[], double v[],double res[][3]);
+  MatrixReverse(double m[][3],double res[][3]);
+
   vector<double> MulMatrix3p1(vector<vector<double>> mx, vector<double> my);
   vector<double> RotateX(double x0, double y0, double z0, double AngleRad);
   vector<double> RotateY(double x0, double y0, double z0, double AngleRad);

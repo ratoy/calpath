@@ -14,9 +14,9 @@ using namespace std;
 double JulianConvert::ToGMST(DateTime Dt)
 {
     Dt = Dt.ToUniversalTime();
-    cout<<"year: "<<Dt.getYear()<<" month: "<<Dt.getMonth()<<" day: "<<Dt.getDay()<<" hour: "<<Dt.getHour()<<" min: "<<Dt.getMinute()<<" sec: "<<Dt.getSecond()<<endl;
+    //cout<<"year: "<<Dt.getYear()<<" month: "<<Dt.getMonth()<<" day: "<<Dt.getDay()<<" hour: "<<Dt.getHour()<<" min: "<<Dt.getMinute()<<" sec: "<<Dt.getSecond()<<endl;
     double lmst = JulianDate(Dt.getYear(), Dt.getMonth(), Dt.getDay(), Dt.getHour(), Dt.getMinute(), Dt.getSecond());
-    cout<<"lmst: "<<lmst<<endl;
+    //cout<<"lmst: "<<lmst<<endl;
     return ConvertToGMST(lmst);
 }
 
@@ -61,17 +61,17 @@ double JulianConvert::JulianDate(int year,               // i.e., 2004
 
 double JulianConvert::ConvertToGMST(double m_Date)
 {
-    cout<<"input date: "<<std::setprecision(6)<<  std::fixed <<m_Date<<endl;
+    //cout<<"input date: "<<std::setprecision(6)<<  std::fixed <<m_Date<<endl;
     double UT = fmod(m_Date + 0.5, 1.0);
     double TU = (m_Date - EPOCH_JAN1_12H_2000 - UT) / 36525.0;
 
     double GMST = 24110.54841 + TU * (8640184.812866 + TU * (0.093104 - TU * 6.2e-06));
 
-    cout <<"UT: "<<UT<<" TU: "<<TU<<" GMST: "<<GMST<<endl;
+    //cout <<"UT: "<<UT<<" TU: "<<TU<<" GMST: "<<GMST<<endl;
 
     GMST = fmod(GMST + SEC_PER_DAY * OMEGA_E * UT, SEC_PER_DAY);
 
-    cout <<" GMST: "<<GMST<<endl;
+    //cout <<" GMST: "<<GMST<<endl;
     if (GMST < 0.0)
     {
         GMST += SEC_PER_DAY; // "wrap" negative modulo value
