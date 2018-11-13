@@ -4,6 +4,7 @@
 #include "DateTime.h"
 using namespace std;
 
+//compute with array, experimental
 void SatTLE::ComputeTrack(DateTime StartTime, DateTime EndTime, int StepTimeInSec,TrackPoint res[])
 {
     double R = 6378.15;
@@ -51,10 +52,16 @@ for(int i = 0; i < 25921; i++)
     }
 }
 
+// compute with vector
 vector<TrackPoint> SatTLE::ComputeTrack2(DateTime StartTime, DateTime EndTime, int StepTimeInSec)
 {
     double R = 6378.15;
     vector<TrackPoint> TpList;
+
+    //predefined vector size
+    int size=1+(EndTime.ToTimestamp()-StartTime.ToTimestamp())/(StepTimeInSec);
+    cout<<"size: "<<size<<endl;
+    TpList.resize(size);
 
     //开始计算,准备TLE数据
     if (m_line1.empty())
@@ -69,7 +76,8 @@ vector<TrackPoint> SatTLE::ComputeTrack2(DateTime StartTime, DateTime EndTime, i
     //准备计算时刻
     DateTime tmpTime = StartTime;
 
-    while (tmpTime <= EndTime)
+    //while (tmpTime <= EndTime)
+    for(int i = 0; i < size; i++)
     {
         double lat, lon, alt, mins;
 
@@ -92,7 +100,8 @@ vector<TrackPoint> SatTLE::ComputeTrack2(DateTime StartTime, DateTime EndTime, i
                       eci.Position().m_z / R, eci.Velocity().m_x / R, eci.Velocity().m_y / R,
                       eci.Velocity().m_z / R);
 
-        TpList.push_back(tp);
+        //TpList.push_back(tp);
+        TpList[i]=tp;
         //tmpTime加上下一时长
         tmpTime = tmpTime.AddSec(StepTimeInSec);
     }
