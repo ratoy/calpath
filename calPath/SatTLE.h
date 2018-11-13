@@ -36,6 +36,7 @@ public:
 
   tuple<MyPoint, MyPoint> GetSatPosEciFull(DateTime Dt);
   vector<TrackPoint> ComputeTrack2(DateTime StartTime, DateTime EndTime, int StepTimeInSec);
+  void ComputeTrack(DateTime StartTime, DateTime EndTime, int StepTimeInSec,TrackPoint res[]);
   SatTLE(string myname) : Satellite("", myname){}
 };
 #endif

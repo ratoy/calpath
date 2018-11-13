@@ -2,6 +2,13 @@
 #include "DateTime.h"
 using namespace std;
 
+TrackPoint::TrackPoint()
+{
+    m_Time = DateTime();
+    m_BlhPoint = MyPoint(0,0,0);
+    m_EciPoint = MyPoint(0, 0, 0);
+    m_Vel = MyPoint(0, 0, 0);
+}
 TrackPoint::TrackPoint(DateTime t, double lon, double lat, double alt)
 {
     m_Time = t;

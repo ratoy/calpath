@@ -85,8 +85,14 @@ void GenSatPath::Do()
 	StopTime.setTimezone(8);
 	int tsp = 20;
 	cout << "computing track..." << endl;
-
 	clock_t start = clock();
+	TrackPoint tpList[30000];
+	sat.ComputeTrack(StartTime, StopTime, tsp,tpList);
+
+	clock_t stop = clock();
+	cout << "total seconds: " << (double)(stop - start) / CLOCKS_PER_SEC << endl;
+
+	start =clock();
 	vector<TrackPoint> Points = sat.ComputeTrack2(StartTime, StopTime, tsp);
 	/*
 	for (auto &p : Points) // access by reference to avoid copying
@@ -98,7 +104,7 @@ void GenSatPath::Do()
 	}
 	*/
 	//save to db
-	clock_t stop = clock();
+	stop = clock();
 	cout << "total seconds: " << (double)(stop - start) / CLOCKS_PER_SEC << endl;
 
 	start = clock();

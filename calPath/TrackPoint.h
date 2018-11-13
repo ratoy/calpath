@@ -28,6 +28,7 @@ public:
   DateTime getTime() { return m_Time; }
   void setTime(DateTime t) { m_Time = t; }
 
+  TrackPoint();
   TrackPoint(DateTime t, double lon, double lat, double alt);
   TrackPoint(DateTime t, double lon, double lat, double alt, double eci_x, double eci_y, double eci_z, double vx, double vy, double vz);
   ~TrackPoint();
