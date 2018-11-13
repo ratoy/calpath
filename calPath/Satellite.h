@@ -39,32 +39,18 @@ private:
   double GetSatHeight() { return 600.0; }
   double TheltaG(DateTime dt);
 
-  MulMatrix3p1(double mx[][3],double my[][3], double res[][3]);
-  RotateX(double coord[], double AngleRad, double res[]);
-  RotateY(double coord[], double AngleRad, double res[]);
-  RotateZ(double coord[], double AngleRad, double res[]);
-  ECRtoBL(double ecr[], double res[]);
-  GetSensorPointsECI(Sensor sen, double r[], double v[],double res[]);
-  IntersectSolution(double v[], double r[],double res[]);
-  CrossProduct(double v1[], double v2[],double res[]);
-  Yuzishi(double array[][3],double res[][3]);
-  double MOD3p3(double[][3] m);
-  ComputeReo(double r[], double v[],double res[][3]);
-  MatrixReverse(double m[][3],double res[][3]);
-
-  vector<double> MulMatrix3p1(vector<vector<double>> mx, vector<double> my);
-  vector<double> RotateX(double x0, double y0, double z0, double AngleRad);
-  vector<double> RotateY(double x0, double y0, double z0, double AngleRad);
-  vector<double> RotateZ(double x0, double y0, double z0, double AngleRad);
-  vector<double> ECRtoBL(vector<double> ecr);
-  vector<double> GetSensorPointsECI(Sensor sen, double rx, double ry, double rz,
-                                    double vx, double vy, double vz);
-  vector<double> IntersectSolution(double vx, double vy, double vz, double rx, double ry, double rz);
-  vector<double> CrossProduct(vector<double> v1, vector<double> v2);
-  vector<vector<double>> Yuzishi(vector<vector<double>> array);
-  double MOD3p3(vector<vector<double>> m);
-  vector<vector<double>> ComputeReo(double rx, double ry, double rz, double vx, double vy, double vz);
-  vector<vector<double>> MatrixReverse(vector<vector<double>> m);
+  void MulMatrix3p1(double mx[][3],double my[], double res[]);
+  void RotateX(double coord[], double AngleRad, double res[]);
+  void RotateY(double coord[], double AngleRad, double res[]);
+  void RotateZ(double coord[], double AngleRad, double res[]);
+  void ECRtoBL(double ecr[], double res[]);
+  void GetSensorPointsECI(Sensor sen, double r[], double v[],double res[]);
+  void IntersectSolution(double v[], double r[],double res[]);
+  void CrossProduct(double v1[], double v2[],double res[]);
+  void Yuzishi(double array[][3],double res[][3]);
+  double MOD3p3(double m[][3]);
+  void ComputeReo(double r[], double v[],double res[][3]);
+  void MatrixReverse(double m[][3],double res[][3]);
 
 public:
   Satellite(string SatId, string SatName);
@@ -87,7 +73,6 @@ public:
   void AddSensor(Sensor sen){m_SensorList.push_back(sen);}
 
   virtual vector<TrackPoint> ComputeTrack2(DateTime StartTime, DateTime EndTime, int StepTimeInSec) {}
-  vector<double> GetSensorPointsBLH(Sensor sen, DateTime dt, double rx, double ry, double rz,
-                                    double vx, double vy, double vz);
+  void GetSensorPointsBLH(Sensor sen,DateTime dt, double r[], double v[],double res[]);
 };
 #endif

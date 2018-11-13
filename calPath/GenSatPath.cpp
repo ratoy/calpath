@@ -91,7 +91,10 @@ void GenSatPath::Do()
 	/*
 	for (auto &p : Points) // access by reference to avoid copying
 	{
-		cout << "x: " << to_string(p.getBlhPoint().getX()) << " y: " + to_string(p.getBlhPoint().getY()) << endl;
+		cout << "lon: " << to_string(p.getBlhPoint().getX()) << " lat: " + to_string(p.getBlhPoint().getY()) << endl;
+		cout << "x: " << to_string(p.getEciPoint().getX()) << " y: " + to_string(p.getEciPoint().getY()) << " z: " + to_string(p.getEciPoint().getZ()) << endl;
+		cout << "vx: " << to_string(p.getVel().getX()) << " vy: " + to_string(p.getVel().getY()) << " vz: " + to_string(p.getVel().getZ()) << endl;
+		break;
 	}
 	*/
 	//save to db
@@ -104,17 +107,26 @@ void GenSatPath::Do()
 	for (auto &sen : sat.getSensorList())
 	{
 		//cout << "computing " << sen.getSenName() << endl;
+		double senblh[4] ={0};
+		double r[3]={0};
+		double v[3]={0};
 		for (auto &tp : Points)
 		{
 			//compute sensor path point
-			vector<double> senblh = sat.GetSensorPointsBLH(sen, tp.getTime(), tp.getEciPoint().getX(),
-														   tp.getEciPoint().getY(), tp.getEciPoint().getZ(), tp.getVel().getX(), tp.getVel().getY(), tp.getVel().getZ());
+			r[0]=tp.getEciPoint().getX();
+			r[1]=tp.getEciPoint().getY();
+			r[2]=tp.getEciPoint().getZ();
+			v[0]=tp.getVel().getX();
+			v[1]=tp.getVel().getY();
+			v[2]=tp.getVel().getZ();
+			sat.GetSensorPointsBLH(sen, tp.getTime(), r,v,senblh);
 
 			//cout << "left lon: " << senblh[0] << " left lat: " << senblh[1] << " right lon: " << senblh[2] << " right lat: " << senblh[3] << endl;
+			//break;
 		}
 	}
 	//save to db
 	stop = clock();
-	//cout << "total count: " << Points.size() << endl;
+	cout << "total count: " << Points.size() << endl;
 	cout << "total seconds: " << (double)(stop - start) / CLOCKS_PER_SEC << endl;
 }
